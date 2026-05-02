@@ -35,3 +35,26 @@ Changes completed:
 Verification:
 
 - Passed: ran `.\gradlew.bat test` successfully after adding the `Task` entity and unit tests.
+
+## Step 3 - Task Manager
+
+Date: May 2, 2026
+
+Changes completed:
+
+- Added `TaskManager.java` in the `txst.myApp` package.
+- Added a Java Collection Framework `List<Task>` to store tasks.
+- Added automatic task ID generation starting at `1`.
+- Added `addTask()` to create pending tasks.
+- Added `updateTask()` to edit an existing task's title and description.
+- Added `markTaskCompleted()` to mark a task as completed.
+- Added `deleteTask()` to remove a task by ID.
+- Added `getAllTasks()` to display every task.
+- Added `getCompletedTasks()` to display only completed tasks.
+- Added `findTaskById()` for lookup support.
+- Added basic business rule validation so task titles cannot be blank.
+- Added `TaskManagerTest.java` with unit tests for add, update, complete, delete, completed-task filtering, and missing-task behavior.
+
+Verification:
+
+- Passed: ran `.\gradlew.bat test` successfully after adding the `TaskManager` and unit tests.
