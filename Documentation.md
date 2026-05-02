@@ -79,3 +79,23 @@ Changes completed:
 Verification:
 
 - Passed: ran `.\gradlew.bat test` successfully after adding file storage and fixing escaped backslash parsing.
+
+## Step 5 - Connect Storage To App Flow
+
+Date: May 2, 2026
+
+Changes completed:
+
+- Added `TaskService.java` in the `txst.myApp` package.
+- Connected `TaskService` to `TaskFileStorage` so saved tasks are loaded when the service is created.
+- Connected `TaskService` to `TaskManager` so business logic remains separate from file storage.
+- Added automatic saving after successful add, update, complete, and delete operations.
+- Added read methods for all tasks, completed tasks, and task lookup through the service.
+- Updated `App.java` to create a `TaskService` using the default storage file `data/tasks.txt`.
+- Updated the application startup message to report how many tasks were loaded.
+- Updated `AppTest.java` to test the new application greeting.
+- Added `TaskServiceTest.java` with tests for loading saved tasks and automatic saving after changes.
+
+Verification:
+
+- Passed: ran `.\gradlew.bat test` successfully after connecting storage through the service layer and updating app startup.
