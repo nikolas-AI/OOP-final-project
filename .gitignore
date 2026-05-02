@@ -5,4 +5,4 @@
 build
 
 # Ignore Kotlin plugin data
-.kotlin
+data/tasks.txt
