@@ -58,3 +58,24 @@ Changes completed:
 Verification:
 
 - Passed: ran `.\gradlew.bat test` successfully after adding the `TaskManager` and unit tests.
+
+## Step 4 - File Storage
+
+Date: May 2, 2026
+
+Changes completed:
+
+- Added `TaskFileStorage.java` in the `txst.myApp` package.
+- Added `saveTasks()` to write task data to a text file.
+- Added `loadTasks()` to read task data from a text file.
+- Used one task per line with the format `id|title|description|completed`.
+- Added escaping so titles and descriptions can safely contain separators, backslashes, and line breaks.
+- Added behavior so loading from a missing file returns an empty task list.
+- Added directory creation before saving when the target file is inside a folder that does not exist yet.
+- Added a `TaskManager(List<Task> startingTasks)` constructor so tasks loaded from storage can initialize the manager.
+- Added ID continuation logic so new tasks created after loading use the next available ID.
+- Added `TaskFileStorageTest.java` with tests for missing files, saving, loading, special-character preservation, and ID continuation after loading.
+
+Verification:
+
+- Passed: ran `.\gradlew.bat test` successfully after adding file storage and fixing escaped backslash parsing.

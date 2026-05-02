@@ -13,6 +13,11 @@ public class TaskManager {
         nextTaskId = 1;
     }
 
+    public TaskManager(List<Task> startingTasks) {
+        tasks = new ArrayList<>(startingTasks);
+        nextTaskId = findNextTaskId();
+    }
+
     public Task addTask(String title, String description) {
         validateTitle(title);
 
@@ -84,5 +89,15 @@ public class TaskManager {
             return "";
         }
         return description.trim();
+    }
+
+    private int findNextTaskId() {
+        int highestId = 0;
+        for (Task task : tasks) {
+            if (task.getId() > highestId) {
+                highestId = task.getId();
+            }
+        }
+        return highestId + 1;
     }
 }
