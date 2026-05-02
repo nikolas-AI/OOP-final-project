@@ -122,3 +122,26 @@ Changes completed:
 Verification:
 
 - Passed: ran `.\gradlew.bat test` successfully after adding the Swing main window and GUI startup path.
+
+## Step 7 - Task Dialog And Add/Edit GUI
+
+Date: May 2, 2026
+
+Changes completed:
+
+- Added `TaskDialog.java` in the `txst.myApp` package.
+- Built a modal Swing dialog using `JDialog`.
+- Added title input with `JTextField`.
+- Added description input with `JTextArea`.
+- Added Save and Cancel buttons.
+- Added dialog validation so task titles cannot be blank.
+- Added `TaskFormData` record to return title and description values from the dialog.
+- Enabled the Add button in `TodoFrame`.
+- Wired Add to open `TaskDialog`, create a task through `TaskService`, save automatically, and refresh the table.
+- Enabled the Edit button in `TodoFrame`.
+- Wired Edit to load the selected task, open `TaskDialog` with existing values, update through `TaskService`, save automatically, and refresh the table.
+- Improved selected task ID lookup by reading from the table model row.
+
+Verification:
+
+- Passed: ran `.\gradlew.bat test` successfully after adding the task dialog and enabling Add/Edit in the GUI.

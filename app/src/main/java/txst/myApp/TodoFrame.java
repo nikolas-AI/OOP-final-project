@@ -88,10 +88,10 @@ public class TodoFrame extends JFrame {
         JPanel actionPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 
         JButton addButton = new JButton("Add");
-        addButton.setEnabled(false);
+        addButton.addActionListener(this::handleAddTask);
 
         JButton editButton = new JButton("Edit");
-        editButton.setEnabled(false);
+        editButton.addActionListener(this::handleEditTask);
 
         JButton completeButton = new JButton("Complete");
         completeButton.addActionListener(this::handleCompleteTask);
@@ -104,6 +104,58 @@ public class TodoFrame extends JFrame {
         actionPanel.add(completeButton);
         actionPanel.add(deleteButton);
         return actionPanel;
+    }
+
+    private void handleAddTask(ActionEvent event) {
+        Optional<TaskDialog.TaskFormData> taskFormData = TaskDialog.showForCreate(this);
+        if (taskFormData.isEmpty()) {
+            return;
+        }
+
+        try {
+            taskService.addTask(taskFormData.get().title(), taskFormData.get().description());
+            refreshTaskTable();
+        } catch (IOException exception) {
+            showError("Could not save new task.", exception);
+        } catch (IllegalArgumentException exception) {
+            showMessage(exception.getMessage());
+        }
+    }
+
+    private void handleEditTask(ActionEvent event) {
+        Optional<Integer> selectedTaskId = getSelectedTaskId();
+        if (selectedTaskId.isEmpty()) {
+            showMessage("Select a task to edit.");
+            return;
+        }
+
+        Optional<Task> selectedTask = taskService.findTaskById(selectedTaskId.get());
+        if (selectedTask.isEmpty()) {
+            showMessage("The selected task could not be found.");
+            refreshTaskTable();
+            return;
+        }
+
+        Optional<TaskDialog.TaskFormData> taskFormData = TaskDialog.showForEdit(this, selectedTask.get());
+        if (taskFormData.isEmpty()) {
+            return;
+        }
+
+        try {
+            boolean updated = taskService.updateTask(
+                    selectedTaskId.get(),
+                    taskFormData.get().title(),
+                    taskFormData.get().description()
+            );
+            if (!updated) {
+                showMessage("The selected task could not be found.");
+            }
+            refreshTaskTable();
+        } catch (IOException exception) {
+            showError("Could not save updated task.", exception);
+        } catch (IllegalArgumentException exception) {
+            showMessage(exception.getMessage());
+        }
     }
 
     private void refreshTaskTable() {
@@ -178,7 +230,8 @@ public class TodoFrame extends JFrame {
             return Optional.empty();
         }
 
-        Object idValue = taskTable.getValueAt(selectedRow, 0);
+        int modelRow = taskTable.convertRowIndexToModel(selectedRow);
+        Object idValue = tableModel.getValueAt(modelRow, 0);
         if (idValue instanceof Integer id) {
             return Optional.of(id);
         }
