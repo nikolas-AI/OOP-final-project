@@ -99,3 +99,26 @@ Changes completed:
 Verification:
 
 - Passed: ran `.\gradlew.bat test` successfully after connecting storage through the service layer and updating app startup.
+
+## Step 6 - Swing Main Window
+
+Date: May 2, 2026
+
+Changes completed:
+
+- Added `TodoFrame.java` in the `txst.myApp` package.
+- Built the main Swing application window using `JFrame`.
+- Added a non-editable `JTable` for task display.
+- Added table columns for ID, title, description, and status.
+- Added an All Tasks / Completed Tasks filter using `JComboBox`.
+- Added buttons for Add, Edit, Complete, and Delete.
+- Wired the Complete button to mark the selected task completed through `TaskService`.
+- Wired the Delete button to confirm and delete the selected task through `TaskService`.
+- Added table refresh behavior after filtering, completing, and deleting tasks.
+- Added user-facing error dialogs for storage failures.
+- Updated `App.java` to start the Swing GUI with `SwingUtilities.invokeLater()`.
+- Added `createTodoFrame()` and `start()` methods to support GUI startup.
+
+Verification:
+
+- Passed: ran `.\gradlew.bat test` successfully after adding the Swing main window and GUI startup path.
